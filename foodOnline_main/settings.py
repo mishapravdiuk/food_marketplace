@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +77,9 @@ DATABASES = {
         # 'HOST': 'localhost'
     }
 }
+
+# Telling djangi that we have created our own user models
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Password validation
