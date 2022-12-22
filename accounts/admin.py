@@ -1,8 +1,11 @@
 from django.contrib import admin
-from accounts.models import User
+from accounts.models import User, UserProfile
 from django.contrib.auth.admin import UserAdmin
 
+
 # Register your models here.
+
+
 
 class CustomUserAdmin(UserAdmin):
     save_as=True
@@ -10,9 +13,11 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'first_name', 'last_name', 'username', 'role', 'is_active')
     fields = ('email', 'first_name', 'last_name', 'username', 'role', 'phone_number',  'date_joined', 'last_login', 'created_at', 'modified_date', 'is_admin', 'is_staff', 'is_active', 'is_superadmin',)
     ordering = ('-date_joined',)
-    readonly_fields = ('email', 'date_joined', 'last_login', 'created_at', 'modified_date', 'is_admin', 'is_staff', 'is_active', 'is_superadmin', )
+    readonly_fields = ('date_joined', 'last_login', 'created_at', 'modified_date', 'is_admin', 'is_staff', 'is_active', 'is_superadmin', )
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()
+    list_display_links = ('username',)
 
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(UserProfile)
