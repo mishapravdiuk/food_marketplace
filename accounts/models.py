@@ -40,11 +40,11 @@ class UserManager(BaseUserManager):
 
 # Gives us a full control of editing the whole custom user model including  user authentication. 
 class User(AbstractBaseUser):
-    RESTAURANT = 1
+    VENDOR = 1
     CUSTOMER = 2
 
     ROLE_CHOICE = (
-        (RESTAURANT, 'Restaurant'),
+        (VENDOR, 'Vendor'),
         (CUSTOMER, 'Customer'),
     )
     first_name = models.CharField(max_length=50)

@@ -17,7 +17,16 @@ class CustomUserAdmin(UserAdmin):
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()
-    list_display_links = ('username',)
+    list_display_links = ('username', 'email')
+
+
+class CustomUserProfileAdmin(admin.ModelAdmin):
+    save_as=True
+    save_on_top=True
+    list_display = ('user', 'created_at', 'modified_at',)
+    ordering = ('-created_at',)
+    list_display_links = ('user',)
+
 
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(UserProfile)
+admin.site.register(UserProfile, CustomUserProfileAdmin)
