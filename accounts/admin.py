@@ -13,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'first_name', 'last_name', 'username', 'role', 'is_active')
     fields = ('email', 'first_name', 'last_name', 'username', 'role', 'phone_number',  'date_joined', 'last_login', 'created_at', 'modified_date', 'is_admin', 'is_staff', 'is_active', 'is_superadmin',)
     ordering = ('-date_joined',)
-    readonly_fields = ('date_joined', 'last_login', 'created_at', 'modified_date', 'is_admin', 'is_staff', 'is_active', 'is_superadmin', )
+    readonly_fields = ('date_joined', 'last_login', 'created_at', 'modified_date', )
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()
