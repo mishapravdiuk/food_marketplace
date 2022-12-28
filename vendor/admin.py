@@ -9,6 +9,7 @@ class VendorAdmin(admin.ModelAdmin):
     search_fields = ('email', 'username', 'vendor_name')
     ordering = ('created_at',)
     list_display_links = ('user', 'vendor_name')
+    list_editable = ('is_approved',)
 
 
 
