@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-@szv0x)2^+n*-+-20=_i)h-x3p@++akrr6!6b^xta!7xs#^%bi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DEBUG', 'False'))
@@ -59,6 +59,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # Import our own context_processors
                 'accounts.context_processors.get_vendor',
+                # register our own context_processors
+                'accounts.context_processors.get_google_api',
             ],
         },
     },
@@ -154,3 +156,6 @@ DEFAULT_FROM_EMAIL = 'foodOnline Marketplace <multishopsmtptest@gmail.com>'
 
 EMAIL_HOST_USER = 'multishopsmtptest@gmail.com'
 EMAIL_HOST_PASSWORD = 'ticrvbbbuakwuupd'
+
+# Google api
+GOOGLE_API_KEY = 'AIzaSyDSRIt0EAyyJw-Yy3l1-0xHMqlzKeV1u_E'
