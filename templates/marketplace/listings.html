@@ -39,7 +39,7 @@
 												<div class="text-holder">
 													<div class="post-title">
 														<h5>
-															<a href="listing-detail.html">{{ vendor.vendor_name }}</a>
+															<a href="{% url 'vendor_detail' vendor.vendor_slug%}">{{ vendor.vendor_name }}</a>
 														</h5>
 													</div>
 													{% if vendor.user_profile.address %}
@@ -50,7 +50,7 @@
 												</div>
 												<div class="list-option">
 
-													<a href="#" class="viewmenu-btn text-color"></a>
+													<a href="{% url 'vendor_detail' vendor.vendor_slug%}" class="viewmenu-btn text-color">View menu</a>
 												</div>
 											</li>
 											{% endfor %}

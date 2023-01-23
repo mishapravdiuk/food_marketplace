@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
+from django.template.defaultfilters import slugify
 
 from vendor.models import Vendor
 
@@ -85,7 +86,7 @@ def activate(request, uidb64, token):
         messages.error(request, 'Invalid activation token')
         return redirect('myAccount')
 
-
+# Func for registration Vendors
 def registerVendor(request):
     if request.user.is_authenticated:
         messages.warning(request, "You are already logged in")  
@@ -100,10 +101,11 @@ def registerVendor(request):
             user.role = User.VENDOR
             user.set_password(password)
             user.save()
-
             vendor = v_form.save(commit = False)
             # We specify the user and user_profile for our vendor form
             vendor.user = user
+            vendor_name = v_form.cleaned_data['vendor_name']
+            vendor.vendor_slug = slugify(vendor_name)+'-'+str(user.id)
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile
             vendor.save()

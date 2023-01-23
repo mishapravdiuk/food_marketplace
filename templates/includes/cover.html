@@ -13,7 +13,7 @@
                                 {% if vendor.user_profile.profile_picture%}
                                 <img src="{{ vendor.user_profile.profile_picture.url }}" alt="">
                                 {% else %}
-                                <img src="{% static 'images/default-profile.png' %}"
+                                <img src="{% static 'images/default-profile.png' %}">
                                 {% endif %}
                             </figure>
                         </div>
@@ -21,8 +21,10 @@
                         <div class="text-holder">
                             <span class="restaurant-title">{{ vendor.vendor_name }}</span>
                             <div class="text">
+                                {% if vendor.user_profile.address %}
                                 <i class="icon-location"></i>
-                                <p>{{ vendor.user_profile.address }}, {{ vendor.user_profile.city }}, {{ vendor.user_profile.state }}, {{ vendor.user_profile.city }}.</p>
+                                <p>{{ vendor.user_profile.address }}.</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
