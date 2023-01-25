@@ -28,6 +28,8 @@ urlpatterns = [
 
     # Cart detail
     path('cart/', marketViews.cart, name='cart'),
+    # Search path
+    path('search/', marketViews.search, name='search'),
 
 ] 
 
