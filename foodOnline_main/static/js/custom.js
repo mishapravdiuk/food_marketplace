@@ -92,8 +92,15 @@ $(document).ready(function(){
                 }if(response.status == 'Failed'){
                     swal(response.message, '', 'error' )
                 }else{
-                $('#cart_counter').html(response.cart_counter['cart_count']);
-                $('#qty-'+food_id).html(response.qty);
+                    $('#cart_counter').html(response.cart_counter['cart_count']);
+                    $('#qty-'+food_id).html(response.qty);
+
+                    // subtotal, tax and grand total
+                    applyCartSubtotal(
+                        response.cart_total['subtotal'],
+                        response.cart_total['tax'],
+                        response.cart_total['grand_total'],
+                    )
                 }
             }
         })
@@ -112,6 +119,7 @@ $(document).ready(function(){
         
         food_id = $(this).attr('data-id');
         url = $(this).attr('data-url');
+        cart_id = $(this).attr('id');
 
         $.ajax({
             type: 'GET',
@@ -124,11 +132,89 @@ $(document).ready(function(){
                 }else if(response.status == 'Failed'){
                     swal(response.message, '', 'error' )
                 }else{
-                $('#cart_counter').html(response.cart_counter['cart_count']);
-                $('#qty-'+food_id).html(response.qty);
+                    $('#cart_counter').html(response.cart_counter['cart_count']);
+                    $('#qty-'+food_id).html(response.qty);
+
+                    if(window.location.pathname == '/cart/'){
+                        removeCartItem(response.qty, cart_id);
+                        checkEmptyCart();
+                    }
+
+                    // subtotal, tax and grand total
+                    applyCartSubtotal(
+                        response.cart_total['subtotal'],
+                        response.cart_total['tax'],
+                        response.cart_total['grand_total'],
+                    )
                 }
-                
             }
         })
     })
+
+
+    // Delete cart item
+    $('.item_qty').each(function(){
+        var the_id = $(this).attr('id')
+        var qty = $(this).attr('data-qty')
+        $('#'+the_id).html(qty)
+    })
+
+    // Delete the cart
+    $('.delete_cart').on('click', function(e){
+        e.preventDefault();
+
+        cart_id = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response){
+                if(response.status == 'Failed'){
+                    swal(response.message, '', 'error' )
+                }else{
+                    $('#cart_counter').html(response.cart_counter['cart_count']);
+                    swal(response.status, response.message, 'success')
+
+                    if(window.location.pathname == '/cart/'){
+                        removeCartItem(0, cart_id);
+                        checkEmptyCart();
+                    }
+
+                    // subtotal, tax and grand total
+                    applyCartSubtotal(
+                        response.cart_total['subtotal'],
+                        response.cart_total['tax'],
+                        response.cart_total['grand_total'],
+                    )
+                }
+            }
+        })
+    })
+
+    // Remove the cart if the qty is 0
+    function removeCartItem(cartItemQty, cart_id){
+        if(cartItemQty <= 0){
+            document.getElementById("cart-item-"+cart_id).remove()
+        }
+        
+    }
+
+    // Check if the cart is empty
+    function checkEmptyCart(){
+        var cart_counter = document.getElementById('cart_counter').innerHTML
+        if(cart_counter == 0){
+            document.getElementById('empty-cart').style.display = 'block';
+        }
+    }
+
+    // apply cart subtotal
+    function applyCartSubtotal(subtotal, tax, grand_total){
+        if(window.location.pathname == '/cart/')
+            $('#subtotal').html(subtotal)
+            $('#tax').html(tax)
+            $('#total').html(grand_total)
+    }
+
+
 });
