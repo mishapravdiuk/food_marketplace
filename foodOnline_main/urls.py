@@ -31,6 +31,9 @@ urlpatterns = [
     # Search path
     path('search/', marketViews.search, name='search'),
 
+    # Checkout
+    path('checkout/', marketViews.checkout, name='checkout'),
+
 ] 
 
 
