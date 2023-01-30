@@ -169,4 +169,5 @@ EMAIL_HOST_PASSWORD = 'ticrvbbbuakwuupd'
 GOOGLE_API_KEY = 'AIzaSyDSRIt0EAyyJw-Yy3l1-0xHMqlzKeV1u_E'
 
 
+
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
