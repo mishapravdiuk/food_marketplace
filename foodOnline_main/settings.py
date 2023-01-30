@@ -68,6 +68,7 @@ TEMPLATES = [
                 'marketplace.context_processors.get_cart_counter', 
                 'marketplace.context_processors.get_cart_subtotal', 
                 'accounts.context_processors.get_user_profile',
+                'accounts.context_processors.get_paypal_client_id',
             ],
         },
     },
@@ -166,3 +167,6 @@ EMAIL_HOST_PASSWORD = 'ticrvbbbuakwuupd'
 
 # Google api
 GOOGLE_API_KEY = 'AIzaSyDSRIt0EAyyJw-Yy3l1-0xHMqlzKeV1u_E'
+
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'

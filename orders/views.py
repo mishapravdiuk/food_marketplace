@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from marketplace.models import Cart
 from marketplace.context_processors import get_cart_subtotal
 from .forms import OrderForm
-from .models import Order
+from .models import Order, Payment
 import simplejson as json
 from .utils import generate_order_number
+from django.http import HttpResponse
 
 # Create your views here.
 def place_order(request):
@@ -40,8 +41,45 @@ def place_order(request):
             order.save() #Order id generated
             order.order_number = generate_order_number(order.id)
             order.save()
-            return redirect('place_order')
+            context = {
+                'order': order,
+                'cart_items': cart_items,
+            }
+            return render(request, 'orders/place_order.html', context)
         else:
             print(form.errors)
 
     return render(request, 'orders/place_order.html')
+
+
+def payments(request):
+    # Check if the request is ajax
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == 'POST':
+        # Store the payments details in the payment model
+        order_number = request.POST.get('order_number')
+        transaction_id = request.POST.get('transaction_id')
+        payment_method = request.POST.get('payment_method')
+        status = request.POST.get('status')
+
+        order = Order.objects.get(user=request.user, order_number=order_number)
+        payment = Payment(
+            user = request.user,
+            transaction_id = transaction_id,
+            payment_method = payment_method, 
+            amount = order.total,
+            status = status,
+        )
+        payment.save()
+
+        # Update the order model
+        order.payment = payment
+        order.is_ordered = True
+        order.save()
+        # Move cart items to ordered food model
+
+        # Send order confirmation email to the customer
+
+        # Send order email to the vendor
+
+    # Clear the cart if the payment success
+    return HttpResponse('Payment view')
