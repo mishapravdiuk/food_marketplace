@@ -20,7 +20,7 @@
                                    
                                     <div id="menu-item-list-6272" class="menu-itam-list">
                                        
-                                        <form action="" method="POST">
+                                        <form action="{% url 'place_order' %}" method="POST">
                                             {% csrf_token %}
                                             
                                             <div class="row">
@@ -84,7 +84,6 @@
                                   <div id="menu-item-list-6272" class="menu-itam-list">
                                        
                                         <ul>
-                                        {% if cart_items %}
                                             {% for item in cart_items %}
                                             <li id="cart-item-{{ item.id }}">
                                                 <div class="image-holder">
@@ -106,12 +105,6 @@
                                                 </div>
                                             </li>
                                             {% endfor %}
-                                        {% else %}
-                                           <div class="text-center p-5">
-                                               <h3>Cart is empty</h3>
-                                           </div>
-                                            
-                                        {% endif %}
                                         </ul>
                                         
                                     </div>
@@ -147,7 +140,17 @@
                                                 </span>
                                             </li>
                                             
-                                            <button type="submit" class="btn btn-danger text-uppercase w-100 p-2 mt-3">Place order</button>
+                                            <h5 class="text-uppercase">Select payment method</h5>
+                                            
+                                            <div class="payment-method">
+                                               <label for="" style="text-decoration: none;">
+                                                    <input type="radio" name="payment_method" value="PayPal">
+                                                    <img src="{% static 'images/PayPal.png' %}" alt="" width="100">
+                                                </label>
+                                            </div>
+                                            <span class="text-danger" id="payment-method-error"></span>
+                                            
+                                            <button type="submit" onclick="return payMethodConfirm();" class="btn btn-danger text-uppercase w-100 p-2 mt-3">Place order</button>
                                             </ul>
                                             
                                             </form>
@@ -167,6 +170,28 @@
 
 
 {% include 'includes/alerts.html' %}
+
+<script>
+    function payMethodConfirm(){
+        var payMethod = $("input[name='payment_method']:checked").val()
+        if(!payMethod){
+            $('#payment-method-error').html("Select payment method!");
+            return false
+        }else{
+            var conf = confirm("You have selected "+payMethod+" as your prefered payment method.\nClick 'OK' to continue.")
+            if(conf == true){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    } 
+    
+    $('input[name=payment_method]').on('change', function(){
+        $('#payment-method-error').html("");
+    })
+    
+</script>
 
 
 {% endblock %}

@@ -34,6 +34,9 @@ urlpatterns = [
     # Checkout
     path('checkout/', marketViews.checkout, name='checkout'),
 
+    # Orders
+    path('orders/', include('orders.urls')),
+
 ] 
 
 
