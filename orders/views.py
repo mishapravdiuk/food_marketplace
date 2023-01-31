@@ -116,7 +116,7 @@ def payments(request):
         send_notification(mail_subject, mail_template, context)
 
         # Clear the cart if the payment success
-        # cart_items.delete()
+        cart_items.delete()
         # Return the status with the result status
         response = {
             'order_number': order_number,
@@ -145,7 +145,7 @@ def order_complete(request):
         context = {
             'order': order,
             'ordered_food': ordered_food,
-            'subtotal': subtotal,
+            'subtotal': round(subtotal, 2),
             'tax_data': tax_data,
         }
         return render(request, 'orders/order_complete.html', context)

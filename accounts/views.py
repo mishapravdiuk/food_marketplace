@@ -10,6 +10,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.template.defaultfilters import slugify
+from orders.models import Order
 
 from vendor.models import Vendor
 
@@ -174,14 +175,21 @@ def myAccount(request):
 # this decorator checks if the user passes specials conditions
 @user_passes_test(check_role_customer)
 def custDashboard(request):
-    return render(request, 'accounts/custDashboard.html')
+    orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')
+    recent_orders =  orders[:5]
+    context = {
+        'orders': orders,
+        'orders_count': orders.count(),
+        'recent_orders': recent_orders,
+    }
+    return render(request, 'accounts/custDashboard.html', context)
 
 
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 # This func is used to render vendor dashboard info
 def vendorDashboard(request):    
-    return render(request, 'accounts/vendorDashboard.html', )
+    return render(request, 'accounts/vendorDashboard.html')
 
 
 # func for the email address entering page. And sending email using function from utils.py
