@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'marketplace',
     'customers',
     'orders',
+    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +87,8 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'foodOnline_db',
         'USER': 'postgres',
         'PASSWORD': '8417',
@@ -162,13 +164,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 # EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'foodOnline Marketplace <multishopsmtptest@gmail.com>'
 
-EMAIL_HOST_USER = 'multishopsmtptest@gmail.com'
-EMAIL_HOST_PASSWORD = 'ticrvbbbuakwuupd'
-
-# Google api
-GOOGLE_API_KEY = 'AIzaSyDSRIt0EAyyJw-Yy3l1-0xHMqlzKeV1u_E'
 
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
