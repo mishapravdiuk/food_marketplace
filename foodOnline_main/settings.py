@@ -165,8 +165,6 @@ EMAIL_PORT = 587
 # EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
-DEFAULT_FROM_EMAIL = 'foodOnline Marketplace <gadgetsmtphost@gmail.com>'
-
 
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
